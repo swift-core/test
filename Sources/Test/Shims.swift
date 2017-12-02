@@ -239,6 +239,7 @@ public func assertThrowsError<T>(
     file: StaticString = #file,
     line: UInt = #line,
     _ errorHandler: (_ error: Error) -> Void = { _ in }) {
+    // FIXME: the function doesn't accept closure on linux
     XCTAssertThrowsError(
         expression,
         message(),
