@@ -52,51 +52,6 @@ public func assertEqual<T>(
 }
 
 public func assertEqual<T>(
-    _ expression1: @autoclosure () throws -> T?,
-    _ expression2: @autoclosure () throws -> T?,
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where T : Equatable {
-    XCTAssertEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertEqual<T>(
-    _ expression1: @autoclosure () throws -> ArraySlice<T>,
-    _ expression2: @autoclosure () throws -> ArraySlice<T>,
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where T : Equatable {
-    XCTAssertEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertEqual<T>(
-    _ expression1: @autoclosure () throws -> ContiguousArray<T>,
-    _ expression2: @autoclosure () throws -> ContiguousArray<T>,
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where T : Equatable {
-    XCTAssertEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertEqual<T>(
-    _ expression1: @autoclosure () throws -> [T],
-    _ expression2: @autoclosure () throws -> [T],
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where T : Equatable {
-    XCTAssertEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertEqual<T, U>(
-    _ expression1: @autoclosure () throws -> [T : U],
-    _ expression2: @autoclosure () throws -> [T : U],
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where U : Equatable {
-    XCTAssertEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertEqual<T>(
     _ expression1: @autoclosure () throws -> T,
     _ expression2: @autoclosure () throws -> T,
     accuracy: T,
@@ -169,51 +124,6 @@ public func assertNotEqual<T>(
     _ message: @autoclosure () -> String = "",
     file: StaticString = #file,
     line: UInt = #line) where T : Equatable {
-    XCTAssertNotEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertNotEqual<T>(
-    _ expression1: @autoclosure () throws -> T?,
-    _ expression2: @autoclosure () throws -> T?,
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where T : Equatable {
-    XCTAssertNotEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertNotEqual<T>(
-    _ expression1: @autoclosure () throws -> ArraySlice<T>,
-    _ expression2: @autoclosure () throws -> ArraySlice<T>,
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where T : Equatable {
-    XCTAssertNotEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertNotEqual<T>(
-    _ expression1: @autoclosure () throws -> ContiguousArray<T>,
-    _ expression2: @autoclosure () throws -> ContiguousArray<T>,
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where T : Equatable {
-    XCTAssertNotEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertNotEqual<T>(
-    _ expression1: @autoclosure () throws -> [T],
-    _ expression2: @autoclosure () throws -> [T],
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where T : Equatable {
-    XCTAssertNotEqual(expression1, expression2, message, file: file, line: line)
-}
-
-public func assertNotEqual<T, U>(
-    _ expression1: @autoclosure () throws -> [T : U],
-    _ expression2: @autoclosure () throws -> [T : U],
-    _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
-    line: UInt = #line) where U : Equatable {
     XCTAssertNotEqual(expression1, expression2, message, file: file, line: line)
 }
 
