@@ -1,9 +1,13 @@
 import XCTest
 
-public func scope(_ task: () throws -> Void) {
+public func scope(
+    file: StaticString = #file,
+    line: UInt = #line,
+    task: () throws -> Void)
+{
     do {
         try task()
     } catch {
-        XCTFail(String(describing: error))
+        XCTFail(String(describing: error), file: file, line: line)
     }
 }
