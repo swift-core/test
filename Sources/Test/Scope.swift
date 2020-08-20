@@ -1,7 +1,7 @@
 import XCTest
 
 public func scope(
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line,
     task: () throws -> Void)
 {

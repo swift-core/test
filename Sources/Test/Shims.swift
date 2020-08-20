@@ -5,7 +5,7 @@ public typealias TestCase = XCTestCase
 public func expect(
     _ expression: @autoclosure () throws -> Bool,
     _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line)
 {
     XCTAssert(
@@ -18,7 +18,7 @@ public func expect(
 public func expect<Error: Swift.Error, Result>(
     throws error: Error,
     _ message: @autoclosure () -> String = "",
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line,
     _ expression: () throws -> Result) where Error: Equatable
 {
@@ -43,7 +43,7 @@ public func expect<Error: Swift.Error, Result>(
 
 public func fail(
     _ message: String = "",
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line)
 {
     XCTFail(message, file: file, line: line)
