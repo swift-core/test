@@ -34,23 +34,21 @@ class TestTests: TestCase {
 
     func testLifetime() {
         class Test {
-            let descrtuctor: () -> Void
+            let destructor: () -> Void
 
-            init(_ descrtuctor: @escaping () -> Void) {
-                self.descrtuctor = descrtuctor
+            init(_ destructor: @escaping () -> Void) {
+                self.destructor = destructor
             }
 
             deinit {
-                descrtuctor()
+                destructor()
             }
         }
 
-        var called = false
+        var success = false
         scope {
-            _ = Test {
-                called = true
-            }
+            _ = Test { success = true }
         }
-        expect(called == true)
+        expect(success)
     }
 }
