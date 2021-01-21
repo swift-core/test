@@ -1,50 +1,48 @@
-import XCTest
-
-public typealias TestCase = XCTestCase
-
 public func expect(
-    _ expression: @autoclosure () throws -> Bool,
+    _ expression: Bool,
     _ message: @autoclosure () -> String = "",
     file: StaticString = #filePath,
     line: UInt = #line)
 {
-    XCTAssert(
-        try expression(),
-        message(),
-        file: file,
-        line: line)
+    test.registerExpectation()
+    guard expression else {
+        fail(message(), file: file, line: line)
+        return
+    }
 }
 
 public func expect<Error: Swift.Error, Result>(
     throws error: Error,
-    _ message: @autoclosure () -> String = "",
+    _ message: @autoclosure @escaping () -> String = "",
     file: StaticString = #filePath,
     line: UInt = #line,
-    _ expression: () throws -> Result) where Error: Equatable
-{
-    func errorHandler(_error: Swift.Error) {
-        guard let __error = _error as? Error else {
-            fail(
-                "expected: \(Error.self), throwed: \(type(of: _error))",
-                file: file,
-                line: line)
-            return
+    _ expression: @escaping () async throws -> Result
+) where Error: Equatable {
+    test.registerExpectation()
+    runAsyncAndBlock {
+        do {
+            _ = try await expression()
+            fail(message(), file: file, line: line)
+        } catch let _error {
+            guard let __error = _error as? Error else {
+                fail(
+                    "expected: \(Error.self), throwed: \(type(of: _error))",
+                    file: file,
+                    line: line)
+                return
+            }
+            guard error == __error else {
+                fail(message(), file: file, line: line)
+                return
+            }
         }
-        expect(error == __error, message(), file: file, line: line)
     }
-
-    XCTAssertThrowsError(
-        try expression(),
-        message(),
-        file: file,
-        line: line,
-        errorHandler)
 }
 
 public func fail(
-    _ message: String = "",
+    _ message: @autoclosure () -> String = "",
     file: StaticString = #filePath,
     line: UInt = #line)
 {
-    XCTFail(message, file: file, line: line)
+    test.fail(.handled(.init(message: message(), file: file, line: line)))
 }

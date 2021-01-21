@@ -1,13 +1,11 @@
-import XCTest
-
 public func scope(
     file: StaticString = #filePath,
     line: UInt = #line,
-    task: () throws -> Void)
+    task: () async throws -> Void) async
 {
     do {
-        try task()
+        try await task()
     } catch {
-        XCTFail(String(describing: error), file: file, line: line)
+        fail(String(describing: error), file: file, line: line)
     }
 }
