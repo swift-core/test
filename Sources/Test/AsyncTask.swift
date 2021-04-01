@@ -2,8 +2,8 @@
 public func asyncTask(
     file: StaticString = #filePath,
     line: UInt = #line,
-    _ task: @concurrent @escaping () async throws -> Void,
-    deinit: @concurrent @escaping () async throws -> Void = {}
+    _ task: @Sendable @escaping () async throws -> Void,
+    deinit: @Sendable @escaping () async throws -> Void = {}
 ) -> Task.Handle<Void, Never> {
     Task.runDetached {
         do {
