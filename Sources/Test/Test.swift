@@ -18,12 +18,18 @@ public class Test {
     }
 
     public func run(_ fileID: String = #fileID) {
+        _runAsyncMain() {
+            await self._run(fileID)
+        }
+    }
+
+    public func _run(_ fileID: String = #fileID) async {
         print("starting test suite", getSuiteName(from: fileID))
 
         for i in 0..<cases.count {
             currentCase = cases[i]
             printCurrentCase(currentCase)
-            run(currentCase)
+            await run(currentCase)
             printCurrentCaseResult(currentCase)
             currentCase = nil
         }
@@ -35,13 +41,11 @@ public class Test {
         }
     }
 
-    func run(_ case: Case) {
-        runAsyncAndBlock {
-            do {
-                try await `case`.task()
-            } catch {
-                self.fail(.unhandled(error))
-            }
+    func run(_ case: Case) async {
+        do {
+            try await `case`.task()
+        } catch {
+            self.fail(.unhandled(error))
         }
     }
 
