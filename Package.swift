@@ -12,14 +12,16 @@ let package = Package(
         .target(
             name: "Test",
             swiftSettings: [
-                .unsafeFlags(["-Xfrontend", "-disable-availability-checking"])
+                .unsafeFlags(["-Xfrontend", "-disable-availability-checking"]),
+                .unsafeFlags(["-Xfrontend", "-enable-experimental-concurrency"])
             ]),
         .executableTarget(
             name: "Tests/Test",
             dependencies: ["Test"],
             path: "Tests/Test",
             swiftSettings: [
-                .unsafeFlags(["-Xfrontend", "-disable-availability-checking"])
+                .unsafeFlags(["-Xfrontend", "-disable-availability-checking"]),
+                .unsafeFlags(["-Xfrontend", "-enable-experimental-concurrency"])
             ]),
     ]
 )
