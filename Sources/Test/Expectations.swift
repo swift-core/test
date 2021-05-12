@@ -11,14 +11,12 @@ public func expect(
     }
 }
 
-// FIXME: reasync doesn't work yet
-
 public func expect<Error: Swift.Error, Result>(
     throws error: Error,
     file: StaticString = #filePath,
     line: UInt = #line,
     _ expression: @escaping () async throws -> Result
-) async where Error: Equatable {
+) reasync where Error: Equatable {
     test.registerExpectation()
     do {
         _ = try await expression()

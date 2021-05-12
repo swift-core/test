@@ -24,6 +24,20 @@ test.case("ExpectError") {
     }
 }
 
+test.case("AsyncExpectError") {
+    enum Error: Swift.Error {
+        case bsod
+    }
+
+    func runVisualStudio() async throws {
+        throw Error.bsod
+    }
+
+    await expect(throws: Error.bsod) {
+        try await runVisualStudio()
+    }
+}
+
 test.case("Throws") {
     func throwsError() throws {}
     await scope {
