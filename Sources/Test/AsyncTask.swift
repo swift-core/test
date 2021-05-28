@@ -4,7 +4,7 @@ public func asyncTask(
     line: UInt = #line,
     _ task: @Sendable @escaping () async throws -> Void,
     deinit: @Sendable @escaping () async throws -> Void = {}
-) -> Task.Handle<Void, Error> {
+) -> Task<Void, Error> {
     detach {
         do {
             try await task()
