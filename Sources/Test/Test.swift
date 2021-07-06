@@ -7,16 +7,14 @@ import Glibc
 public let test = Test()
 
 public class Test {
-    private var cases: [Case] = []
-    private var currentCase: Case! = nil
+    var cases: [Case] = []
+    var currentCase: Case! = nil
 
     var expectationsCount: Int { cases.reduce(0, { $0 + $1.expectations }) }
     var failuresCount: Int { cases.reduce(0, { $0 + $1.failures.count }) }
+}
 
-    public func `case`(_ name: String, task: @escaping Case.Task) {
-        cases.append(.init(name: name, task: task))
-    }
-
+extension Test {
     public func run(_ fileID: String = #fileID) {
         _runAsyncMain() {
             await self._run(fileID)
@@ -24,7 +22,7 @@ public class Test {
     }
 
     public func _run(_ fileID: String = #fileID) async {
-        print("starting test suite", getSuiteName(from: fileID))
+        printCurrentSuite(fileID)
 
         for i in 0..<cases.count {
             currentCase = cases[i]
@@ -48,20 +46,18 @@ public class Test {
             self.fail(.unhandled(error))
         }
     }
+}
 
-    func registerExpectation() {
-        currentCase.expectations += 1
-    }
-
-    func fail(_ failure: Case.Failure) {
-        currentCase.failures.append(failure)
-    }
-
+extension Test {
     private func getSuiteName(from fileID: String) -> Substring {
         let folder = fileID.dropLast("/main.swift".count)
         return folder.starts(with: "Tests_")
             ? folder.dropFirst("Tests_".count)
             : folder
+    }
+
+    func printCurrentSuite(_ fileID: String) {
+        print("starting test suite", getSuiteName(from: fileID))
     }
 
     func printCurrentCase(_ case: Case) {
@@ -85,27 +81,5 @@ public class Test {
             cases.count, "tests with",
             expectationsCount, "expectations",
             "\n")
-    }
-}
-
-extension Test.Case.Failure: CustomStringConvertible {
-    var description: String {
-        switch self {
-        case .handled(let info): return info.description
-        case .unhandled(let error): return "unhandled error: \(error)"
-        }
-    }
-}
-
-extension Test.Case.Failure.Info: CustomStringConvertible {
-    var description: String {
-        var file = file.description
-        if file.starts(with: "/home") || file.starts(with: "/Users") {
-            var components = file.split(separator: "/")
-            components.removeFirst(2)
-            components.insert("~", at: 0)
-            file = components.joined(separator: "/")
-        }
-        return "\(file):\(line) \(message)"
     }
 }

@@ -1,3 +1,13 @@
+extension Test {
+    func registerExpectation() {
+        currentCase.expectations += 1
+    }
+
+    func fail(_ failure: Case.Failure) {
+        currentCase.failures.append(failure)
+    }
+}
+
 public func expect(
     _ expression: Bool,
     _ message: @autoclosure () -> String = "",
