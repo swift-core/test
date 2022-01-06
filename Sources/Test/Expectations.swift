@@ -26,7 +26,7 @@ public func expect<Error: Swift.Error, Result>(
     file: StaticString = #filePath,
     line: UInt = #line,
     _ expression: @escaping () async throws -> Result
-) reasync where Error: Equatable {
+) async where Error: Equatable {
     test.registerExpectation()
     do {
         _ = try await expression()
