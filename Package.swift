@@ -10,11 +10,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Test",
-            swiftSettings: [
-                .unsafeFlags(["-Xfrontend", "-disable-availability-checking"]),
-                .unsafeFlags(["-Xfrontend", "-enable-experimental-concurrency"])
-            ]),
+            name: "Test"),
         .executableTarget(
             name: "Tests/Test",
             dependencies: ["Test"],
