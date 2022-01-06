@@ -5,7 +5,7 @@ public func asyncTask(
     _ task: @Sendable @escaping () async throws -> Void,
     deinit: @Sendable @escaping () async throws -> Void = {}
 ) -> Task<Void, Error> {
-    detach {
+    Task.detached {
         do {
             try await task()
             try await `deinit`()
