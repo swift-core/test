@@ -15,13 +15,7 @@ public class Test {
 }
 
 extension Test {
-    public func run(_ fileID: String = #fileID) {
-        _runAsyncMain() {
-            await self._run(fileID)
-        }
-    }
-
-    public func _run(_ fileID: String = #fileID) async {
+    public func run(_ fileID: String = #fileID) async {
         printCurrentSuite(fileID)
 
         for i in 0..<cases.count {

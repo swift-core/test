@@ -65,4 +65,4 @@ test.case("Lifetime") {
     expect(success)
 }
 
-test.run()
+await test.run()
