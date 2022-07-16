@@ -18,11 +18,8 @@ let package = Package(
         .executableTarget(
             name: "Tests/Test",
             dependencies: ["Test"],
-            path: "Tests/Test",
-            swiftSettings: [
-                .unsafeFlags(["-Xfrontend", "-disable-availability-checking"]),
-                .unsafeFlags(["-Xfrontend", "-enable-experimental-concurrency"])
-            ]),
+            path: "Tests/Test"
+        ),
     ]
 )
 
