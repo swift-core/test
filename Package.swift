@@ -15,14 +15,22 @@ let package = Package(
     targets: [
         .target(
             name: "Test",
-            swiftSettings: [
-                .enableUpcomingFeature("ConciseMagicFile")
-            ]
+            swiftSettings: swift6
         ),
         .executableTarget(
             name: "Tests/Test",
             dependencies: ["Test"],
-            path: "Tests/Test"
+            path: "Tests/Test",
+            swiftSettings: swift6
         ),
     ]
 )
+
+let swift6: [SwiftSetting] = [
+    .enableUpcomingFeature("ConciseMagicFile"),
+    .enableUpcomingFeature("ForwardTrailingClosures"),
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("StrictConcurrency"),
+    .enableUpcomingFeature("ImplicitOpenExistentials"),
+    .enableUpcomingFeature("BareSlashRegexLiterals"),
+]
