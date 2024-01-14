@@ -1,16 +1,16 @@
 @testable import Test
 
-test.case("Expect") {
+test("Expect") {
     expect(true == true)
     expect(true != false)
     expect(42 > 0)
 }
 
-test.case("ExpectMessage") {
+test("ExpectMessage") {
     expect(true == true, "two true to be true")
 }
 
-test.case("ExpectError") {
+test("ExpectError") {
     enum Error: Swift.Error {
         case bsod
     }
@@ -24,7 +24,7 @@ test.case("ExpectError") {
     }
 }
 
-test.case("AsyncExpectError") {
+test("AsyncExpectError") {
     enum Error: Swift.Error {
         case bsod
     }
@@ -38,14 +38,14 @@ test.case("AsyncExpectError") {
     }
 }
 
-test.case("Throws") {
+test("Throws") {
     func throwsError() throws {}
     await scope {
         try throwsError()
     }
 }
 
-test.case("Lifetime") {
+test("Lifetime") {
     class Test {
         let destructor: () -> Void
 
@@ -65,4 +65,4 @@ test.case("Lifetime") {
     expect(success)
 }
 
-await test.run()
+await run()

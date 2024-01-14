@@ -1,6 +1,6 @@
 extension Test {
-    public class Case {
-        public typealias Task = () async throws -> Void
+    class Case {
+        typealias Task = () async throws -> Void
 
         enum Failure {
             struct Info {
@@ -12,8 +12,8 @@ extension Test {
             case unhandled(Swift.Error)
         }
 
-        public let name: String
-        public let task: Task
+        let name: String
+        let task: Task
         var expectations: Int
         var failures: [Failure]
 
@@ -23,10 +23,6 @@ extension Test {
             self.expectations = 0
             self.failures = []
         }
-    }
-
-    public func `case`(_ name: String, task: @escaping Case.Task) {
-        cases.append(.init(name: name, task: task))
     }
 }
 

@@ -4,18 +4,44 @@ import Darwin.C
 import Glibc
 #endif
 
-public let test = Test()
+class Test {
+    static let shared = Test()
 
-public class Test {
     var cases: [Case] = []
     var currentCase: Case! = nil
 
     var expectationsCount: Int { cases.reduce(0, { $0 + $1.expectations }) }
     var failuresCount: Int { cases.reduce(0, { $0 + $1.failures.count }) }
+
+    private init() {}
 }
 
 extension Test {
-    public func run(_ fileID: String = #fileID) async {
+    func registerExpectation() {
+        currentCase.expectations += 1
+    }
+
+    func `case`(_ name: String, task: @escaping Case.Task) {
+        cases.append(.init(name: name, task: task))
+    }
+
+    func scope(
+        file: StaticString = #filePath,
+        line: UInt = #line,
+        task: () async throws -> Void) async
+    {
+        do {
+            try await task()
+        } catch {
+            fail(String(describing: error), file: file, line: line)
+        }
+    }
+
+    func fail(_ failure: Case.Failure) {
+        currentCase.failures.append(failure)
+    }
+
+    func run(_ fileID: String = #fileID) async {
         printCurrentSuite(fileID)
 
         for i in 0..<cases.count {
@@ -37,43 +63,7 @@ extension Test {
         do {
             try await `case`.task()
         } catch {
-            self.fail(.unhandled(error))
+            fail(.unhandled(error))
         }
-    }
-}
-
-extension Test {
-    private func getSuiteName(from fileID: String) -> Substring {
-        let folder = fileID.dropLast("/main.swift".count)
-        return folder.starts(with: "Tests_")
-            ? folder.dropFirst("Tests_".count)
-            : folder
-    }
-
-    func printCurrentSuite(_ fileID: String) {
-        print("starting test suite", getSuiteName(from: fileID))
-    }
-
-    func printCurrentCase(_ case: Case) {
-        print("test", `case`.name, terminator: ": ")
-    }
-
-    func printCurrentCaseResult(_ case: Case) {
-        switch `case`.failures.count {
-        case 0:
-            print("✅")
-        default:
-            print("🛑")
-            `case`.failures.forEach { print(" " + $0.description) }
-        }
-    }
-
-    func printTotalResults() {
-        print(
-            "\n",
-            failuresCount, "failures in",
-            cases.count, "tests with",
-            expectationsCount, "expectations",
-            "\n")
     }
 }
