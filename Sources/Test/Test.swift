@@ -26,7 +26,7 @@ extension Test {
     }
 
     func scope(
-        file: StaticString = #filePath,
+        file: StaticString = #file,
         line: UInt = #line,
         task: () async throws -> Void) async
     {

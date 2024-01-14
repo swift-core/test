@@ -14,7 +14,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Test"),
+            name: "Test",
+            swiftSettings: [
+                .enableUpcomingFeature("ConciseMagicFile")
+            ]
+        ),
         .executableTarget(
             name: "Tests/Test",
             dependencies: ["Test"],

@@ -2,7 +2,7 @@ extension Test {
     func expect(
         _ expression: Bool,
         _ message: @autoclosure () -> String = "",
-        file: StaticString = #filePath,
+        file: StaticString = #file,
         line: UInt = #line)
     {
         registerExpectation()
@@ -14,7 +14,7 @@ extension Test {
 
     func expect<Error: Swift.Error, Result>(
         throws error: Error,
-        file: StaticString = #filePath,
+        file: StaticString = #file,
         line: UInt = #line,
         _ expression: @escaping () async throws -> Result
     ) async where Error: Equatable {
@@ -37,7 +37,7 @@ extension Test {
 
     func expect<Error: Swift.Error, Result>(
         throws error: Error,
-        file: StaticString = #filePath,
+        file: StaticString = #file,
         line: UInt = #line,
         _ expression: @escaping () throws -> Result
     ) where Error: Equatable {
@@ -60,7 +60,7 @@ extension Test {
 
     func fail(
         _ message: @autoclosure () -> String = "",
-        file: StaticString = #filePath,
+        file: StaticString = #file,
         line: UInt = #line)
     {
         fail(.handled(.init(

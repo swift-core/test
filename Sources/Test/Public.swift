@@ -6,7 +6,7 @@ public func test(
 }
 
 public func scope(
-    file: StaticString = #filePath,
+    file: StaticString = #file,
     line: UInt = #line,
     task: () async throws -> Void
 ) async {
@@ -16,7 +16,7 @@ public func scope(
 public func expect(
     _ expression: Bool,
     _ message: @autoclosure () -> String = "",
-    file: StaticString = #filePath,
+    file: StaticString = #file,
     line: UInt = #line
 ) {
     Test.shared.expect(expression, message(), file: file, line: line)
@@ -24,7 +24,7 @@ public func expect(
 
 public func expect<Error: Swift.Error, Result>(
     throws error: Error,
-    file: StaticString = #filePath,
+    file: StaticString = #file,
     line: UInt = #line,
     _ expression: @escaping () async throws -> Result
 ) async where Error: Equatable {
@@ -33,7 +33,7 @@ public func expect<Error: Swift.Error, Result>(
 
 public func expect<Error: Swift.Error, Result>(
     throws error: Error,
-    file: StaticString = #filePath,
+    file: StaticString = #file,
     line: UInt = #line,
     _ expression: @escaping () throws -> Result
 ) where Error: Equatable {
@@ -42,7 +42,7 @@ public func expect<Error: Swift.Error, Result>(
 
 public func fail(
     _ message: @autoclosure () -> String = "",
-    file: StaticString = #filePath,
+    file: StaticString = #file,
     line: UInt = #line
 ) {
     Test.shared.fail(message(), file: file, line: line)
