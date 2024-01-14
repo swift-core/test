@@ -28,8 +28,8 @@ extension Test {
     func scope(
         file: StaticString = #file,
         line: UInt = #line,
-        task: () async throws -> Void) async
-    {
+        task: () async throws -> Void
+    ) async {
         do {
             try await task()
         } catch {
@@ -44,8 +44,8 @@ extension Test {
     func run(_ fileID: String = #fileID) async {
         printCurrentSuite(fileID)
 
-        for i in 0..<cases.count {
-            currentCase = cases[i]
+        for index in 0..<cases.count {
+            currentCase = cases[index]
             printCurrentCase(currentCase)
             await run(currentCase)
             printCurrentCaseResult(currentCase)
@@ -53,7 +53,7 @@ extension Test {
         }
 
         printTotalResults()
-        
+
         if failuresCount > 0 {
             exit(1)
         }

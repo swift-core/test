@@ -3,8 +3,8 @@ extension Test {
         _ expression: Bool,
         _ message: @autoclosure () -> String = "",
         file: StaticString = #file,
-        line: UInt = #line)
-    {
+        line: UInt = #line
+    ) {
         registerExpectation()
         guard expression else {
             fail(message(), file: file, line: line)
@@ -61,8 +61,8 @@ extension Test {
     func fail(
         _ message: @autoclosure () -> String = "",
         file: StaticString = #file,
-        line: UInt = #line)
-    {
+        line: UInt = #line
+    ) {
         fail(.handled(.init(
             message: message(),
             file: file,
